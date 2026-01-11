@@ -8,9 +8,10 @@ import { UpdateLocationRequest, GameSessionResponse } from '@/types/api';
  */
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body: UpdateLocationRequest = await request.json();
 
     if (!body.location) {
@@ -24,7 +25,7 @@ export async function PUT(
     }
 
     const store = getGameStore();
-    const session = await store.updateSession(params.id, {
+    const session = await store.updateSession(id, {
       location: body.location,
       step: 2,
     });

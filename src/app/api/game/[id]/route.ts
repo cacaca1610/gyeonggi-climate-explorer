@@ -8,11 +8,12 @@ import { GameSessionResponse } from '@/types/api';
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const store = getGameStore();
-    const session = await store.getSession(params.id);
+    const session = await store.getSession(id);
 
     if (!session) {
       return NextResponse.json(
@@ -46,11 +47,12 @@ export async function GET(
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const store = getGameStore();
-    const deleted = await store.deleteSession(params.id);
+    const deleted = await store.deleteSession(id);
 
     if (!deleted) {
       return NextResponse.json(

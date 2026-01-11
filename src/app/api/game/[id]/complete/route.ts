@@ -8,9 +8,10 @@ import { CompleteGameRequest, GameSessionResponse } from '@/types/api';
  */
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body: CompleteGameRequest = await request.json();
 
     if (!body.quizResults || !Array.isArray(body.quizResults)) {
@@ -24,7 +25,7 @@ export async function POST(
     }
 
     const store = getGameStore();
-    const session = await store.updateSession(params.id, {
+    const session = await store.updateSession(id, {
       quizResults: body.quizResults,
       step: 3,
       completedAt: new Date().toISOString(),
