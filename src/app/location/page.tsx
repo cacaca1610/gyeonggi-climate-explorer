@@ -212,7 +212,7 @@ export default function LocationPage() {
         {/* 구/읍면/동 선택 */}
         <div className="mb-4">
           <label className="block text-base font-bold text-gray-800 mb-2">
-            2. {selectedLocation?.districts[0]?.dongs.length > 0 ? '구 선택' : '읍/면/동 선택'}
+            2. {selectedLocation?.districts?.[0]?.dongs?.length && selectedLocation.districts[0].dongs.length > 0 ? '구 선택' : '읍/면/동 선택'}
           </label>
           <select
             value={selectedDistrict}
@@ -223,7 +223,7 @@ export default function LocationPage() {
             }`}
           >
             <option value="">
-              {selectedLocation?.districts[0]?.dongs.length > 0 ? '구를 선택하세요' : '읍/면/동을 선택하세요'}
+              {selectedLocation?.districts?.[0]?.dongs?.length && selectedLocation.districts[0].dongs.length > 0 ? '구를 선택하세요' : '읍/면/동을 선택하세요'}
             </option>
             {selectedLocation?.districts
               .slice()
